@@ -1,0 +1,273 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register | AdoptaPaw</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #fdfbfb, #ebedee);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Top Navbar Styling */
+        .custom-navbar {
+            background: linear-gradient(90deg, #d343ff, #c94fee);
+            padding: 0.8rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 999;
+        }
+
+        .custom-navbar .navbar-brand {
+            color: #fff !important;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .custom-navbar .navbar-toggler {
+            border: none;
+            box-shadow: none;
+        }
+
+        .custom-navbar .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .custom-navbar .nav-link {
+            color: #fff !important;
+            font-size: 1.1rem;
+            font-weight: 500;
+            padding: 10px 16px;
+            margin: 0 4px;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .custom-navbar .nav-link:hover,
+        .custom-navbar .nav-link.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        /* Mobile View Styling */
+        @media (max-width: 991px) {
+            .custom-navbar .nav-link {
+                text-align: center;
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .custom-navbar .navbar-collapse {
+                background: #d343ff;
+                border-radius: 0 0 10px 10px;
+                padding: 10px 0;
+            }
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            margin-top: 30px;
+            color: #333;
+        }
+
+        .center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .register-card {
+            display: flex;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .form-section {
+            flex: 1;
+            padding: 50px;
+        }
+
+        .form-section h3 {
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .image-section {
+            flex: 1;
+            background: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-section img {
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .btn-register {
+            background-color: #d343ff;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-register:hover {
+            background-color: #d343ff;
+        }
+
+        .form-control,
+        .form-select {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            box-shadow: none;
+        }
+
+        .form-section form label {
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+
+        .form-section input,
+        .form-section select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+            transition: 0.3s;
+        }
+
+        .form-section input:focus,
+        .form-section select:focus {
+            border-color: #d343ff;
+            box-shadow: 0 0 5px rgba(210, 44, 236, 0.4);
+            outline: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            .register-card {
+                flex-direction: column;
+            }
+
+            .image-section {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">AdoptaPaw<i class="fas fa-paw"></i></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="(% url 'about' %)" class="active">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shop' %}">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Subheader -->
+    <h2 class="section-title">Create your account</h2>
+
+    <!-- Display errors -->
+    {% if form.errors %}
+    {% for field in form %}
+    {% for error in field.errors %}
+    <script>alert("{{ error|escapejs }}");</script>
+    {% endfor %}
+    {% endfor %}
+    {% endif %}
+
+    <!-- REGISTER FORM -->
+    <div class="center-container">
+        <div class="register-card">
+            <div class="form-section">
+                <h3 class="text-center">Sign Up</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.role.label_tag }}
+                        {{ form.role }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.password1.label_tag }}
+                        {{ form.password1 }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.password2.label_tag }}
+                        {{ form.password2 }}
+                    </div>
+                    <button type="submit" class="btn btn-register w-100">Create Account</button>
+                    <p class="text-center mt-3">Already have an account?
+                        <a href="{% url 'login' %}">Login here</a>
+                    </p>
+                </form>
+            </div>
+
+            <div class="image-section">
+                <img src="{% static 'image/register.png' %}" alt="Register Image">
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        {% include "footer.html" %}
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

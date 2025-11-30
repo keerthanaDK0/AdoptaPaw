@@ -1,0 +1,207 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Request Doctor Clearance - Pet Details</title>
+    <link rel="icon" href="{% static 'image/paw.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .sidebar a:hover {
+            background-color: #334155;
+        }
+
+        .main {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #a906b5;
+        }
+
+        .logout-btn {
+            background-color: #a906b5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #8e059c;
+            transform: scale(1.05);
+        }
+
+        .content {
+            padding: 40px 30px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .form-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-card h2 {
+            color: #a906b5;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .submit-btn {
+            background-color: #a906b5;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #8e059c;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: #999;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">AdoptaPaw</div>
+        <a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'my_request' %}"><i class="fas fa-paw"></i> My Requests</a>
+        <a href="{% url 'seller_home' %}"><i class="fas fa-store"></i> Seller Section</a>
+        <a href="{% url 'feedback' %}"><i class="fas fa-comment-dots"></i> Feedback</a>
+        <a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <h1>Request Doctor Clearance</h1>
+            <button class="logout-btn" onclick="window.location.href='{#}'">Logout</button>
+        </div>
+
+        <div class="content">
+            <div class="form-card">
+                <h2>Request Doctor Clearance for {{ pet.name }}</h2>
+                <form action="{% url 'submit_doctor_clearance_request' pet.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="reason">Reason for Request</label>
+                        <textarea id="reason" name="reason" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="additional_info">Additional Information (optional)</label>
+                        <textarea id="additional_info" name="additional_info" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Submit Request</button>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2025 Pet Adoption Portal - All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Pets | AdoptaPaw Seller</title>
+    <link rel="icon" href="{% static 'image/paw.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .sidebar a:hover {
+            background-color: #334155;
+        }
+
+        .main {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #a906b5;
+        }
+
+        .logout-btn {
+            background-color: #a906b5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #8e059c;
+            transform: scale(1.05);
+        }
+
+        .content {
+            padding: 40px 30px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            animation: fadeSlide 0.8s ease forwards;
+        }
+
+        th,
+        td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+            color: #333;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .pet-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .view-more-btn {
+            background-color: #a906b5;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .view-more-btn:hover {
+            background-color: #8e059c;
+            transform: scale(1.05);
+        }
+
+        .adopted-label {
+            color: green;
+            font-weight: bold;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="sidebar">
+        <div class="logo">AdoptaPaw Seller<i class="fas fa-paw"></i></div>
+        <a href="{% url 'seller_home' %}"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'add_pets' %}" class="active"><i class="fas fa-plus-circle"></i> Add Pets</a>
+        <a href="{% url 'view_my_pets' %}"><i class="fas fa-paw"></i> View My Pets</a>
+        <a href="{% url 'seller_chat_list' %}"><i class="fas fa-comments"></i> Chat List</a>
+        <a href="{#}"><i class="fas fa-file-medical-alt"></i> Doctor Reports</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+
+    <div class="main">
+        <div class="topbar">
+            <h1>My Listed Pets</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="content">
+            {% if pets %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Breed</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pet in pets %}
+                    <tr>
+                        <td>
+                            {% if pet.image %}
+                            <img src="{{ pet.image.url }}" alt="{{ pet.name }}" class="pet-img">
+                            {% else %}
+                            <img src="{% static 'image/paw.png' %}" alt="No Image" class="pet-img">
+                            {% endif %}
+                        </td>
+                        <td>{{ pet.name }}</td>
+                        <td>{{ pet.pet_type }}</td>
+                        <td>{{ pet.breed }}</td>
+                        <td>{{ pet.age }} months</td>
+                        <td>{{ pet.gender }}</td>
+                        <td>
+                            {% if not pet.is_adopted %}
+                            <form action="{% url 'mark_as_adopted' pet.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="view-more-btn">Mark Adopted</button>
+                            </form>
+                            {% else %}
+                            <span class="adopted-label">Adopted</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No pets listed yet.</p>
+            {% endif %}
+        </div>
+
+        <footer>
+            &copy; 2025 Pet Adoption Portal - All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+
+</body>
+
+</html>

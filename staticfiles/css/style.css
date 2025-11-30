@@ -1,0 +1,353 @@
+/* Base Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #fdfdfd;
+    color: #333;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+/* Top Navbar Styling */
+.custom-navbar {
+    background: linear-gradient(90deg, #d343ff, #c94fee);
+    padding: 0.8rem 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+}
+
+.custom-navbar .navbar-brand {
+    color: #fff !important;
+    font-size: 2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.custom-navbar .navbar-toggler {
+    border: none;
+    box-shadow: none;
+}
+
+.custom-navbar .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.custom-navbar .nav-link {
+    color: #fff !important;
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding: 10px 16px;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+}
+
+.custom-navbar .nav-link:hover,
+.custom-navbar .nav-link.active {
+    background: rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+}
+
+/* Mobile View Styling */
+@media (max-width: 991px) {
+    .custom-navbar .nav-link {
+        text-align: center;
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    .custom-navbar .navbar-collapse {
+        background: #d343ff;
+        border-radius: 0 0 10px 10px;
+        padding: 10px 0;
+    }
+}
+
+/* Hero Section */
+.hero-section {
+    background-color: #f4f4f4;
+    padding: 100px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hero-container {
+    max-width: 1200px;
+    display: flex;
+    gap: 60px;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 0 20px;
+}
+
+.hero-image img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.hero-text h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 25px;
+}
+
+.btn-adopt {
+    display: inline-block;
+    background-color: #8e44ad;
+    color: #fff;
+    padding: 12px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-adopt:hover {
+    background-color: #732d91;
+}
+
+/* Services Section */
+.services-section {
+    padding: 80px 20px;
+    text-align: center;
+    background: #fff;
+}
+
+.section-title {
+    font-size: 2.8rem;
+    color: #cf5cec;
+    margin-bottom: 15px;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #777;
+    max-width: 700px;
+    margin: 0 auto 50px;
+}
+
+.service-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+.service-card {
+    background: #fafafa;
+    padding: 30px 20px;
+    border-radius: 12px;
+    width: 300px;
+    text-align: center;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.service-card img {
+    height: 80px;
+    margin-bottom: 15px;
+}
+
+.service-card h3 {
+    color: #d343ff;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    color: #666;
+    font-size: 1rem;
+}
+
+/* Pet Care Section */
+.pet-care-section {
+    background: #edd1f3;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.pet-care-section h2 {
+    font-size: 2.6rem;
+    color: #d343ff;
+    margin-bottom: 20px;
+}
+
+.pet-care-section p {
+    font-size: 1.15rem;
+    color: #444;
+    margin-bottom: 30px;
+    max-width: 750px;
+    margin-inline: auto;
+}
+
+.pet-care-section .btn {
+    padding: 12px 25px;
+    font-size: 1.1rem;
+    background: #d343ff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}
+
+.pet-care-section .btn:hover {
+    background: #d343ff;
+}
+
+/* About Section */
+
+.about-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 70px 50px;
+    gap: 50px;
+    flex-wrap: wrap;
+    background: #fffdfc;
+}
+
+.about-content {
+    flex: 1;
+    max-width: 600px;
+    font-size: 1.05rem;
+    color: #444;
+    line-height: 1.8;
+}
+
+.about-content h2 {
+    font-size: 2rem;
+    color: #d343ff;
+    margin-bottom: 20px;
+    font-weight: 700;
+    position: relative;
+}
+
+.about-content h2::after {
+    content: '';
+    width: 60px;
+    height: 3px;
+    background: #d343ff;
+    display: block;
+    margin-top: 8px;
+    border-radius: 2px;
+}
+
+.about-content ul {
+    padding-left: 18px;
+    margin-top: 10px;
+}
+
+.about-content ul li {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: #666;
+    list-style-type: disc;
+}
+
+.about-image-container {
+    flex: 1;
+    text-align: center;
+}
+
+.about-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+    object-fit: cover;
+}
+
+/* Address Section */
+.address-section {
+    background: #fff3e0;
+    padding: 60px 30px;
+    text-align: center;
+    border-radius: 15px;
+    margin: 60px 20px;
+}
+
+.address-section h2 {
+    font-size: 2rem;
+    color: #d343ff;
+    margin-bottom: 10px;
+}
+
+.address-section p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+/* Counter Section */
+.counter-section {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+    background: #e3f1fd;
+    padding: 60px 20px;
+}
+
+.counter-box {
+    background: #fff;
+    border: 3px solid #dda1f4;
+    padding: 30px 50px;
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.counter-box h2 {
+    font-size: 2.8rem;
+    color: #7c3aed;
+}
+
+.counter-box p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-top: 10px;
+}
+
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-section {
+        flex-direction: column;
+        padding: 80px 20px;
+        text-align: center;
+    }
+
+    .about-container {
+        flex-direction: column;
+        padding: 40px 20px;
+    }
+
+    .service-row {
+        flex-direction: column;
+        align-items: center;
+    }
+}

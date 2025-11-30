@@ -1,0 +1,264 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{{ pet.name }} - Pet Details</title>
+    <link rel="icon" href="{% static 'image/paw.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .sidebar a:hover {
+            background-color: #334155;
+        }
+
+        .main {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #a906b5;
+        }
+
+        .logout-btn {
+            background-color: #a906b5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #8e059c;
+            transform: scale(1.05);
+        }
+
+        .content {
+            padding: 40px 30px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .pet-details-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            animation: fadeSlide 0.8s ease forwards;
+        }
+
+        .pet-details-card img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .pet-info {
+            flex: 1;
+        }
+
+        .pet-info h2 {
+            font-size: 28px;
+            color: #a906b5;
+            margin-bottom: 20px;
+        }
+
+        .pet-info p {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .chat-btn,
+        .adopted-btn {
+            margin-top: 20px;
+            background: #a906b5;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .chat-btn:hover {
+            background: #8e059c;
+        }
+
+        .adopted-btn {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+
+        .request-btn {
+            background-color: #3498db;
+            margin-top: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .request-btn:hover {
+            background-color: #2b80c1;
+            transform: scale(1.05);
+        }
+
+        .request-btn.pending {
+            background-color: gray;
+            cursor: not-allowed;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="logo">AdoptaPaw User</div>
+        <a href="{% url 'user_home' %}" class="active"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'my_requests' %}"><i class="fas fa-paw"></i> My Requests</a>
+        <a href="{% url 'seller_home' %}"><i class="fas fa-store"></i> Seller Section</a>
+        <a href="{% url 'feedback'  %}"><i class="fas fa-comment-dots"></i> Feedback</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <h1>Pet Details</h1>
+            <button class="logout-btn" onclick="window.location.href='{#}'">Logout</button>
+        </div>
+
+        <div class="content">
+            <div class="pet-details-card">
+                {% if pet.image %}
+                <img src="{{ pet.image.url }}" alt="{{ pet.name }}">
+                {% else %}
+                <img src="{% static 'images/default_pet.jpg' %}" alt="No Image">
+                {% endif %}
+                <div class="pet-info">
+                    <h2>{{ pet.name }}</h2>
+                    <p><strong>Age:</strong> {{ pet.age }} years</p>
+                    <p><strong>Breed:</strong> {{ pet.breed }}</p>
+                    <p><strong>Gender:</strong> {{ pet.gender }}</p>
+                    <p><strong>Description:</strong> {{ pet.description }}</p>
+                    <p><strong>Seller:</strong> {{ pet.owner.username }}</p>
+
+                    {% if pet.is_adopted %}
+                    <button class="adopted-btn" disabled>Adopted</button>
+                    {% elif request.user != pet.owner %}
+                    <a href="{% url 'create_or_redirect_chat' pet.id %}">
+                        <button class="chat-btn">Chat with Seller</button>
+                    </a>
+
+                    {% if doctor_request %}
+                    {% if doctor_request.status == "Pending" %}
+                    <button class="chat-btn request-btn pending" disabled>Pending</button>
+                    {% else %}
+                    <a href="{% url 'request_doctor_clearance' pet.id %}">
+                        <button class="chat-btn request-btn">Request Doctor Clearance</button>
+                    </a>
+                    {% endif %}
+                    {% else %}
+                    <a href="{% url 'request_doctor_clearance' pet.id %}">
+                        <button class="chat-btn request-btn">Request Doctor Clearance</button>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            &copy; 2025 Pet Adoption Portal - All rights reserved.
+        </footer>
+    </div>
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+</body>
+
+</html>

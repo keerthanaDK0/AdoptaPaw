@@ -1,0 +1,113 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - AdoptaPaw</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Your custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg custom-navbar sticky-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">AdoptaPaw<i class="fas fa-paw"></i></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="(% url 'about' %)" class="active">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shop' %}">Shop</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'contact_us' %}">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <h2>About AdoptaPaw</h2>
+        <h5>
+            <p>Connecting pets with loving families. Every pet deserves a home.</p>
+        </h5>
+    </header>
+
+    <section class="about-container">
+        <div class="about-content">
+            <h2>Who We Are</h2>
+            <h5>
+                <p>AdoptaPaw is a platform dedicated to helping pets find their forever homes. Our mission is to ensure
+                    every pet receives the love and care they deserve.</p>
+            </h5>
+            <hr>
+            <h2>Our Mission</h2>
+            <h5>
+                <p>We work with shelters and pet owners to provide a seamless adoption process, making it easy for
+                    families to adopt pets in need.</p>
+            </h5>
+            <hr>
+            <h2>Why Choose Us?</h2>
+            <ul>
+                <h5>
+                    <li>🐾 Verified pet listings</li>
+                    <li>🏡 Safe adoption process</li>
+                    <li>❤ Support and guidance for pet owners</li>
+                </h5>
+            </ul>
+        </div>
+
+        <div class="about-image-container">
+            <img src="{% static 'image/cute.png' %}" alt="Adoptable Pets" class="about-image">
+        </div>
+    </section>
+
+    <section class="counter-section">
+        <p style="text-align: center; margin-top: 20px;">
+            <b>Join us in giving every pet a loving home. Together, we’re making a difference!</b>
+        </p>
+        <div class="counter-box">
+            <h2 class="counter" data-target="1500">0</h2>
+            <p>Pets Adopted</p>
+        </div>
+        <div class="counter-box">
+            <h2 class="counter" data-target="800">0</h2>
+            <p>Happy Families</p>
+        </div>
+        <div class="counter-box">
+            <h2 class="counter" data-target="300">0</h2>
+            <p>Volunteers Joined</p>
+        </div>
+    </section>
+
+
+    <footer>
+        {% include 'footer.html' %}
+    </footer>
+    <!-- Bootstrap JS Bundle (for toggle functionality) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+
+</body>
+
+</html>

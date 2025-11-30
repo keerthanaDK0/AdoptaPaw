@@ -1,0 +1,273 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AdoptaPaw | Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .sidebar a:hover {
+            background-color: #334155;
+        }
+
+        .dropdown-link {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-link>a {
+            display: flex;
+            align-items: center;
+            padding: 15px 30px;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-link>a:hover {
+            background-color: #334155;
+        }
+
+        .dropdown-content {
+            display: none;
+            flex-direction: column;
+            background-color: #334155;
+            padding-left: 20px;
+        }
+
+        .dropdown-content a {
+            padding: 12px 30px;
+            font-size: 14px;
+            color: #fff;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #475569;
+        }
+
+        .dropdown-link:hover .dropdown-content {
+            display: flex;
+        }
+
+        .sidebar .active {
+            background-color: #a906b5;
+            font-weight: bold;
+        }
+
+        .main {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #a906b5;
+        }
+
+        .logout-btn {
+            background-color: #a906b5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #8e059c;
+            transform: scale(1.05);
+        }
+
+        .content {
+            padding: 40px 30px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .welcome-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeSlide 0.8s ease forwards;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-text {
+            max-width: 60%;
+        }
+
+        .welcome-text h2 {
+            font-size: 28px;
+            color: #a906b5;
+            margin-bottom: 15px;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .welcome-image img {
+            max-width: 300px;
+            border-radius: 12px;
+        }
+
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <script>alert("{{ message|escapejs }}");</script>
+    {% endfor %}
+    {% endif %}
+
+    <div class="sidebar">
+        <div class="logo">AdoptaPaw Admin<i class="fas fa-paw"></i></div>
+        <a href="{% url 'admin_home' %}" class="active"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'manage_users' %}"><i class="fas fa-users"></i> Manage Users</a>
+
+        <div class="dropdown-link">
+            <a href="#"><i class="fas fa-dog"></i> Manage Pets <i class="fas fa-caret-down"
+                    style="margin-left:auto;"></i></a>
+            <div class="dropdown-content">
+                <a href="{% url 'viewpets' %}">View Pets</a>
+                <a href="{% url 'approve_pets' %}">Approve Pet</a>
+            </div>
+        </div>
+
+        <div class="dropdown-link">
+            <a href="#"><i class="fas fa-user-md"></i> Manage Doctors <i class="fas fa-caret-down"
+                    style="margin-left:auto;"></i></a>
+            <div class="dropdown-content">
+                <a href="{% url 'view_doctors' %}">View Doctors</a>
+                <a href="{% url 'add_doctor' %}">Add Doctor</a>
+            </div>
+        </div>
+
+        <a href="{% url 'view_feedback' %}"><i class="fas fa-comment-dots"></i> Feedback</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <h1>Admin Dashboard</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <section class="content">
+            <div class="welcome-card">
+                <div class="welcome-text">
+                    <h2>Welcome, Admin!</h2>
+                    <p>Manage users, pets, and doctors. Review feedback and ensure a smooth experience for all users of
+                        AdoptaPaw.</p>
+                </div>
+                <div class="welcome-image">
+                    <img src="{% static 'image/paw.png' %}" alt="Welcome Admin">
+                </div>
+            </div>
+
+            <!-- Additional admin dashboard content goes here -->
+
+
+        </section>
+        <footer>
+            {% include 'footer.html' %}
+        </footer>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+</body>
+
+</html>

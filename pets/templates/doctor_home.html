@@ -1,0 +1,230 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AdoptaPaw | Doctor Dashboard</title>
+    <link rel="icon" href="{% static 'image/paw.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .sidebar a:hover {
+            background-color: #334155;
+            transform: scale(1.05);
+        }
+
+        .sidebar .active {
+            background-color: #a906b5;
+            font-weight: bold;
+        }
+
+
+        .main {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #a906b5;
+        }
+
+        .logout-btn {
+            background-color: #a906b5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .content {
+            padding: 40px 30px;
+            flex: 1;
+            overflow-y: auto;
+            animation: fadeInContent 0.8s ease;
+        }
+
+        @keyframes fadeInContent {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeUpCard 0.9s ease;
+        }
+
+        @keyframes fadeUpCard {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .welcome-text {
+            max-width: 60%;
+        }
+
+        .welcome-text h2 {
+            font-size: 28px;
+            color: #a906b5;
+            margin-bottom: 15px;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .welcome-image img {
+            max-width: 300px;
+            border-radius: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .welcome-image img:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            text-align: center;
+            padding: 10px;
+            color: #999;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <script>alert("{{ message|escapejs }}");</script>
+    {% endfor %}
+    {% endif %}
+
+    <div class="sidebar">
+        <div class="logo">AdoptaPaw Doctor<i class="fas fa-paw"></i></div>
+        <a href="{% url 'doctor_home' %}" class="active"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'buyer_request' %}"><i class="fas fa-hand-holding-heart"></i> Buyer Request</a>
+        <a href="{% url 'seller_requests' %}"><i class="fas fa-store"></i> Seller Request</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <h1>Welcome, Dr. {{ user.username }}</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="content">
+            <div class="welcome-card">
+                <div class="welcome-text">
+                    <h2>Hello, Dr. {{ user.username }}!</h2>
+                    <p>Here you can view and respond to pet adoption buyer and seller requests. Your guidance ensures
+                        happy and healthy adoptions!</p>
+                </div>
+                <div class="welcome-image">
+                    <img src="{% static 'image/paw.png' %}" alt="Doctor Dashboard">
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            {% include 'footer.html' %}
+        </footer>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+
+</body>
+
+</html>

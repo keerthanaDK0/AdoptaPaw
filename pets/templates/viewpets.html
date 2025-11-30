@@ -1,0 +1,245 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AdoptaPaw | View Pets</title>
+    <link rel="icon" href="{% static 'image/paw.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Basic Reset and Layout */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .sidebar a:hover {
+            background-color: #334155;
+        }
+
+        .dropdown-link {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dropdown-content {
+            display: none;
+            flex-direction: column;
+            background-color: #334155;
+            padding-left: 20px;
+        }
+
+        .dropdown-link:hover .dropdown-content {
+            display: flex;
+        }
+
+        .main {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .topbar {
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #a906b5;
+        }
+
+        .logout-btn {
+            background-color: #a906b5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .content {
+            padding: 40px 30px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .pet-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pet-table th,
+        .pet-table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .pet-table th {
+            background-color: #f1f1f1;
+        }
+
+        .pet-image {
+            height: 80px;
+            width: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #555;
+        }
+
+        .sidebar .active {
+            background-color: #a906b5;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <script>alert("{{ message|escapejs }}");</script>
+    {% endfor %}
+    {% endif %}
+    <div class="sidebar">
+        <div class="logo">AdoptaPaw Admin<i class="fas fa-paw"></i></div>
+        <a href="{% url 'admin_home' %}"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'manage_users' %}"><i class="fas fa-users"></i> Manage Users</a>
+
+        <div class="dropdown-link">
+            <a href="#"><i class="fas fa-dog"></i> Manage Pets <i class="fas fa-caret-down"
+                    style="margin-left:auto;"></i></a>
+            <div class="dropdown-content">
+                <a href="{% url 'viewpets' %}" class="active">View Pets</a>
+                <a href="{% url 'approve_pets' %}">Approve Pet</a>
+            </div>
+        </div>
+
+        <div class="dropdown-link">
+            <a href="#"><i class="fas fa-user-md"></i> Manage Doctors <i class="fas fa-caret-down"
+                    style="margin-left:auto;"></i></a>
+            <div class="dropdown-content">
+                <a href="{% url 'view_doctors' %}">View Doctors</a>
+                <a href="{% url 'add_doctor' %}">Add Doctor</a>
+            </div>
+        </div>
+
+        <a href="{% url 'view_feedback' %}"><i class="fas fa-comment-dots"></i> Feedback</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <h1>View Pets</h1>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <section class="content">
+            <table class="pet-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Breed</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Owner</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pet in pets %}
+                    <tr>
+                        <td>
+                            {% if pet.image %}
+                            <img src="{{ pet.image.url }}" class="pet-image" alt="{{ pet.name }}">
+                            {% else %}
+                            No Image
+                            {% endif %}
+                        </td>
+                        <td>{{ pet.name }}</td>
+                        <td>{{ pet.pet_type }}</td>
+                        <td>{{ pet.breed }}</td>
+                        <td>{{ pet.age }}</td>
+                        <td>{{ pet.gender }}</td>
+                        <td>{{ pet.owner.username }}</td>
+                        <td>Approved</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8">No approved pets found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+
+        <footer>
+            {% include 'footer.html' %}
+        </footer>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+</body>
+
+</html>

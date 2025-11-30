@@ -1,0 +1,227 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>AdoptaPaw | Seller Dashboard</title>
+    <link rel="icon" href="{% static 'image/paw.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        /* Base styling copied from user_home.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #1e293b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            padding-top: 30px;
+            position: fixed;
+            height: 100%;
+        }
+
+        .sidebar .logo {
+            font-size: 22px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .sidebar a {
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+        }
+
+        .sidebar a:hover {
+            background-color: #334155;
+        }
+
+        .sidebar .active {
+            background-color: #a906b5;
+            font-weight: bold;
+        }
+
+        .main {
+            margin-left: 260px;
+            width: calc(100% - 260px);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 100%;
+        }
+
+        .topbar {
+            background-color: #fff;
+            padding: 20px 30px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #a906b5;
+        }
+
+        .topbar .welcome {
+            font-size: 18px;
+            font-weight: bold;
+            color: #3b3b3b;
+        }
+
+        .logout-btn {
+            background-color: #a906b5;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #8e059c;
+            transform: scale(1.05);
+        }
+
+        .content {
+            padding: 40px 30px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .welcome-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            flex-grow: 1;
+            animation: fadeSlide 0.8s ease forwards;
+        }
+
+        .welcome-text {
+            max-width: 60%;
+        }
+
+        .welcome-text h2 {
+            font-size: 28px;
+            color: #a906b5;
+            margin-bottom: 15px;
+        }
+
+        .welcome-text p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .welcome-image img {
+            max-width: 300px;
+            border-radius: 12px;
+        }
+
+        footer {
+            text-align: center;
+            background-color: #f9fafb;
+            padding: 10px 0;
+            margin-top: auto;
+            /* Ensure footer stays at the bottom */
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    {% if messages %}
+    {% for message in messages %}
+    <script>alert("{{ message|escapejs }}");</script>
+    {% endfor %}
+    {% endif %}
+
+    <div class="sidebar">
+        <div class="logo">AdoptaPaw Seller<i class="fas fa-paw"></i></div>
+        <a href="{% url 'seller_home' %}" class="active"><i class="fas fa-home"></i> Home</a>
+        <a href="{% url 'add_pets' %}"><i class="fas fa-plus-circle"></i> Add Pets</a>
+        <a href="{% url 'view_my_pets' %}"><i class="fas fa-paw"></i> View My Pets</a>
+        <a href="{% url 'seller_chat_list' %}"><i class="fas fa-comments"></i> Chat List</a>
+        <a href="{#}"><i class="fas fa-file-medical-alt"></i> Doctor Reports</a>
+        <a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </div>
+
+    <div class="main">
+        <div class="topbar">
+            <h1>Seller Dashboard</h1>
+            <span class="welcome">Welcome, {{ request.user.username }}</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+
+        <div class="content">
+            <div class="welcome-card">
+                <div class="welcome-text">
+                    <h2>Sell With Us, Seller Section</h2>
+                    <p>Manage your pet listings, talk to buyers, and track your reports all in one place!</p>
+                </div>
+                <div class="welcome-image">
+                    <img src="{% static 'image/paw.png' %}" alt="Seller Section">
+                </div>
+            </div>
+
+            <!-- Optional section for dynamic seller data -->
+            {# <div class="dashboard-overview">...</div> #}
+
+            <footer>
+                {% include 'footer.html' %}
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = "{% url 'login' %}";
+        }
+    </script>
+</body>
+
+</html>
